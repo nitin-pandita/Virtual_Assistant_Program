@@ -1,0 +1,201 @@
+from time import time
+import webbrowser
+import wikipedia
+from wikipedia.wikipedia import random
+from Friday_assistant import takeCommand
+import pyttsx3
+import speech_recognition as sr
+import datetime
+from ecapture import ecapture as ec
+import wolframalpha 
+import os
+from datetime import date
+
+
+engine = pyttsx3.init('sapi5')
+voices = engine.getProperty('voices')
+
+engine.setProperty('voice', voices[0].id)
+
+
+def greetme():
+    hour = datetime.datetime.now().hour
+
+    if hour >= 0 and hour < 12:
+        speak('Good Morning Sir')
+    elif hour >= 12 and hour < 18:
+        speak('Good Afternoon Sir')
+    else:
+        speak('Good Evening Sir')
+    assname = 'Friday'
+    speak('I am your Self Made Assistant')
+    speak(assname)
+
+
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+
+
+def username():
+    # speak('What should i call you Sir')
+    # uname = takeCommand()
+    speak('Welcome')
+    # speak(uname)
+
+    speak('What can i do for you sir')
+
+
+def takeCommand():
+    r = sr.Recognizer()
+
+    with sr.Microphone() as source:
+        print('Listening...')
+        r.pause_threshold = 0.5
+        r.non_speaking_duration = 0.5
+        audio = r.listen(source)
+    try:
+        print('Recoginizing...')
+        query = r.recognize_google(audio, language='en')
+        print(f"User Said: {query}\n")
+    except Exception as e:
+        print('Unable to Catch your voice..')
+        return "None"
+    return query
+
+
+if __name__ == "__main__":
+    greetme()
+    # username()
+    while True:
+        query = takeCommand().lower()
+
+        if 'wikipedia' in query:
+            speak('Searching Wikipedia..')
+            query = query.replace("wikipedia", "")
+            results = wikipedia.summary(query, sentences=3)
+            speak('According to Wikipedia..')
+            print(results)
+            speak(results)
+        elif "open prison break" in query:
+            speak('Opening Prison Break')
+            mypc_dir = "E:\\Prison Break"
+            os.listdir(mypc_dir)
+
+            file = os.startfile(os.path.join(mypc_dir))
+
+        elif "open chrome" in query or "open chrome browser" in query:
+            speak('opening Google Chrome')
+            codePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            os.startfile(codePath)
+
+        elif "open youtube" in query:
+            speak('Opening Youtube')
+            webbrowser.open("www.youtube.com")
+
+
+        elif "google search" in query:
+            query = query.replace('google search',"")
+            output = query
+            speak('searching for the results')
+            webbrowser.open('https://www.google.com/'+ output + "")
+
+        elif "open mail" in query:
+            speak('Opening your Mail')
+            webbrowser.open("https://mail.google.com/mail/u/0/#inbox")
+
+        elif "suggest games" and "suggest some games" in query:
+            speak('Suggesting Some Games for you')
+            webbrowser.open(
+                "https://crotorrents.com/?s=Carbone+European+Union+in+Africa")
+
+        elif "play song" in query or "play music" in query:
+            speak('As you wish Boss')
+            music_dir = "C:\\Users\\karti\\Music\\Songs"
+            songs = os.listdir(music_dir)
+            print(songs)
+            random = os.startfile(os.path.join(music_dir, songs[0]))
+        # elif 'send mail' in query:
+
+        elif "who made you" in query and "who is your owner" in query:
+            print('Nitin Pandita is my creator')
+            speak('Nitin Pandita is my creator')
+
+        elif "how are you" in query:
+            speak('I am fine thanks for asking, How are you sir')
+
+        elif  "good" in query:
+            speak('It is good to know that you are fine')
+
+        elif "jarvis" in query:
+            speak('I think you are asking to someone else. I am friday')
+
+        elif "where is my college" in query or "where is my college located" in query:
+            speak('Opening your Collage Site')
+            webbrowser.open("https://standrewscollege.ac.in/")
+
+        elif "today's news" in query:
+            speak('Here is todays news')
+            webbrowser.open("https://www.indiatoday.in/")
+
+        elif "search" in query:
+            query = query.replace('search','')
+            # path  = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe".
+            speak('searching for results')
+            webbrowser.open(query)
+        elif "where is" in query: 
+
+            query = query.replace('where is ',"")
+            location = query
+            speak('You asked to locate')
+            speak(location)
+            webbrowser.open("https://www.google.nl/maps/place/" + location + "")
+
+
+
+        elif "today is my birthday" in query or "today's is my birthday" in query:
+            speak('Happy Birthday Sir, I am glad that you are my creator')
+            speak('I have a small suprise for you')
+            webbrowser.open("https://first-wishes.com/bday-wishes?n=Nitin")
+
+        elif "thank you" in query:
+            speak('It is always my pleasure to make you Happy')
+        elif "exit" in query:
+            speak('Thanks for your Time')
+            exit()
+
+        elif "play arijit singh songs" in query or "play arijit singh song" in query:
+            speak ('Playing Songs of Arijit Singh')
+            webbrowser.open("https://www.youtube.com/watch?v=HPkydJOXXNs")
+        
+        elif "camera" in query or "take a photo" in query:
+            ec.capture(1,"robo camera","img.jpg")
+
+        elif "who are you" in query:
+            speak('I am your self-made Assistant Jarvis')    
+                
+            
+        elif "what can you do" in query:
+            speak('''You can say
+            open chrome,
+            search for, 
+            or play songs''')
+
+        elif "define" in query:
+            query = query.replace('define',"")
+            find = query
+            webbrowser.open(find)
+
+        
+        elif "time" in query:
+            today = date.today()
+            speak(f"It is {today}")
+
+        
+
+
+
+        
+
+        # elif "open local disk c" and "open local disk C" in query:
+        #     speak('Opening ')
