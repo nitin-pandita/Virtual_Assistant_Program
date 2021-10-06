@@ -161,7 +161,7 @@ if __name__ == "__main__":
         elif "thank you" in query:
             speak('It is always my pleasure to make you Happy')
         elif "exit" in query:
-            speak('Thanks for your Time')
+            speak('Thanks for your valuable Time')
             exit()
 
         elif "play arijit singh songs" in query or "play arijit singh song" in query:
